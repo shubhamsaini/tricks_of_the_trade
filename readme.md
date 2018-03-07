@@ -58,3 +58,28 @@ Solution:
 ### On local machine
 
 	ssh -N -L 8889:comet-14-01.sdsc.edu:8889 $USER@comet.sdsc.xsede.org
+	
+## Converting a Plink BED file to VCF
+```bash
+REFPANEL=1kg.snp.str.chr1.vcf.gz
+zcat ${REFPANEL} | grep -v "^#" | cut -f 3 | grep -v ":" > refpanel_chr1_snps.txt
+zcat ${REFPANEL} | grep -v "^#" | awk '($3!~/:/)' | cut -f 1-5 > refpanel_chr1_alleles.txt
+
+plink \
+--bfile snp_file \
+--recode vcf bgz \
+--out snp_file_recoded \
+--extract refpanel_chr1_snps.txt \
+--real-ref-alleles \
+--a2-allele refpanel_chr1_alleles.txt 4 3 '#'
+```
+
+## Converting a VCF file to Plink
+```bash
+bcftools query -f '%REF\t%ID\n' ref.vcf.gz > a1allele.txt
+
+plink --vcf ref.vcf.gz \
+--keep-allele-order \
+--a1-allele a1allele.txt 1 2 \
+--make-bed --out ref.plink
+```

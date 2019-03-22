@@ -13,7 +13,7 @@ On server:
     
 On Client:
 
-    ssh -N -L localhost:8888:localhost:8888 s1saini@snorlax.ucsd.edu
+    ssh -N -L localhost:9992:localhost:9992 s1saini@snorlax.ucsd.edu
 
 ## GLIBC error
 

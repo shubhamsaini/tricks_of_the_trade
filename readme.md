@@ -85,10 +85,12 @@ plink --vcf ref.vcf.gz \
 ```
 
 ## iMessage history through chats.db file and sqlite
-```SELECT is_from_me, datetime(date/1000000000 + strftime("%s", "2001-01-01") ,"unixepoch","localtime"), text
+```
+SELECT is_from_me, datetime(date/1000000000 + strftime("%s", "2001-01-01") ,"unixepoch","localtime"), text
 FROM message T1 
 INNER JOIN chat_message_join T2 
     ON T2.chat_id=321
     AND T1.ROWID=T2.message_id 
 ORDER BY T1.date
-LIMIT 10;```
+LIMIT 10;
+```
